@@ -1,0 +1,62 @@
+{%extends './base.html' %}
+{%block title%}MovieArea{%endblock%}
+{%block main%}
+    <br>
+    <br>
+    <div class="card" style="max-width: 100%">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <br>
+            <img src="{{data.poster}}" class="img-fluid rounded-start" alt="MovieImage">
+            <hr style="max-width: 80%">
+            <div style="max-width: 80%">
+            {% if user.is_authenticated %}
+            <form method='POST' action = "/movie_area/movie/?title={{title}}">
+              {%csrf_token%}
+              <label class="form-label">Rating (left(bad) - Right(good))</label>
+              <input type="range" class="form-range" min="0" max="100" name = 'Rating' value="{{RatingValue}}">
+              <input type='submit' value='Rate It!'>
+            </form>
+            {%endif%}
+            {% if not user.is_authenticated %}
+            <p>login to Rate</p>
+            {%endif%}
+          </div>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+                <h3 class="card-title">{{data.name}}</h5>
+                <p class="card-text">Type: {{data.type}}</p>
+                <p class="card-text">IMDBRating: {{data.imdbrating}}</p>
+                <p class="card-text">Story: {{data.plot}}</p>
+                <p class="card-text">Year: {{data.year}}</p>
+                <p class="card-text">Rated: {{data.rated}}</p>
+                <p class="card-text">Release Date: {{data.releasedate}}</p>
+                <p class="card-text">Genre: {{data.genre}}</p>
+                <p class="card-text">Writer: {{data.writer}}</p>
+                <p class="card-text">Language: {{data.language}}</p>
+                <p class="card-text">Ratings: {{data.ratings}}</p>
+                <p class="card-text">Metascore: {{data.metascore}}</p>
+                <p class="card-text">IMDBVote: {{data.imdbvotes}}</p>
+            </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <h2>Recommended Movies</h2>
+    <br>
+    <hr>
+    <div class="row">
+      {%for movie in rec_data%}
+        <div class="card" style="width: 25%;">
+          <img src="{{movie.poster}}" class="card-img-top" alt='movie_poster'>
+          <h5 class="card-title">{{movie.name}}</h5>
+          <p class="card-text">Type:{{movie.type}}</p>
+          <p class="card-text">Year:{{movie.year}}</p>
+          <a href="/movie_area/movie/?title={{movie.name}}${{movie.imdbid}}" class="btn btn-primary">See More</a>
+        </div>
+      {%endfor%}
+      </div>
+    
+
+{%endblock%}

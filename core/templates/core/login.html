@@ -1,0 +1,16 @@
+{%extends './base.html'%}
+{%block title%}MediaRecommender{%endblock%}
+{%block main%}
+    {% if not user.is_authenticated %}
+    <form method="POST" autocomplete="off">
+        {%csrf_token%}
+        {{form.as_p}}
+        <input type='submit' value='Login' />
+    </form>
+    <a href="/register/">Do not Have an Account </a>
+    {%endif%}
+    {% if user.is_authenticated %}
+    <p> You are Already SignedIn</p>
+    {%endif%}
+    
+{%endblock%}

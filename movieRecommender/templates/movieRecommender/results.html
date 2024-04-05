@@ -1,0 +1,15 @@
+{%extends './base.html' %}
+{%block title%}MovieArea{%endblock%}
+{%block main%}
+<div class="row">
+    {%for movie in data%}
+        <div class="card" style="width: 25%;">
+            <img src="{{movie.poster}}" class="card-img-top" alt='movie_poster'>
+            <h5 class="card-title">{{movie.name}}</h5>
+            <p class="card-text">Type:{{movie.type}}</p>
+            <p class="card-text">Year:{{movie.year}}</p>
+            <a href="/movie_area/movie/?title={{movie.name}}${{movie.imdbid}}" class="btn btn-primary">See More</a>
+        </div>
+    {%endfor%}
+</div>
+{%endblock%}
